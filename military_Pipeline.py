@@ -401,11 +401,11 @@ async def batch_save(device_id, file_id):
         path15,
         path16,
     ]
-    titles = ['v1', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9', 'v10', 'v11', 'v12', 'v13', 'v14', 'v15', 'v16']
+    titles = ['v1', 'v2','v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9', 'v10', 'v11', 'v12', 'v13', 'v14', 'v15', 'v16']
     Process (target = await merge_videos(
         videos_to_merge,
         'merged.mp4',
-        grid_size=(2, 2),  # 2 row, 2 cols
+        grid_size=(4, 4),  # 2 row, 2 cols
         titles=titles,
         title_position=(0.1, 0.5),  # text poistion is (0.1 * w, 0.5 * h)
         max_frames=100) ) # merge first 100 frames per video
