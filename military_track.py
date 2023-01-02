@@ -115,12 +115,12 @@ face_did_encoding_store = dict()
 track_type = []
 
 #load lmdb
-env = lmdb.open('./lmdb/face-detection.lmdb',
-                max_dbs=10, map_size=int(100e9))
+# env = lmdb.open('./lmdb/face-detection.lmdb',
+#                 max_dbs=10, map_size=int(100e9))
 
-# Now create subdbs for known and unknown people.
-known_db = env.open_db(b'known')
-unknown_db = env.open_db(b'unknown')
+# # Now create subdbs for known and unknown people.
+# known_db = env.open_db(b'known')
+# unknown_db = env.open_db(b'unknown')
 
 async def lmdb_known():
     # Iterate each DB to show the keys are sorted:
