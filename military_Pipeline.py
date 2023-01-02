@@ -354,56 +354,54 @@ async def batch_save(device_id, file_id):
         path1 = './' + str(file_path)
     elif(device_id==2):
         path2 = './' + str(file_path)
-    # elif(device_id==3):
-    #     path3 = './' + str(file_path)
-    #     file_path_3.append((path3))
-    # elif(device_id==4):
-    #     path4 = './' + str(file_path)
-    # elif(device_id==5):
-    #     path5 = './' + str(file_path)
-    # elif(device_id==6):
-    #     path6 = './' + str(file_path)
-    # elif(device_id==7):
-    #     path7 = './' + str(file_path)
-    # elif(device_id==8):
-    #     path8 = './' + str(file_path)
-    # elif(device_id==9):
-    #     path9 = './' + str(file_path)
-    # elif(device_id==10):
-    #     path10 = './' + str(file_path)
-    # elif(device_id==11):
-    #     path11 = './' + str(file_path)
-    # elif(device_id==12):
-    #     path12 = './' + str(file_path)
-    # elif(device_id==13):
-    #     path13 = './' + str(file_path)
-    # elif(device_id==14):
-    #     path14 = './' + str(file_path)
-    # elif(device_id==15):
-    #     path15 = './' + str(file_path)
-    # elif(device_id==16):
-    #     path16 = './' + str(file_path)
+    elif(device_id==3):
+        path3 = './' + str(file_path)
+    elif(device_id==4):
+        path4 = './' + str(file_path)
+    elif(device_id==5):
+        path5 = './' + str(file_path)
+    elif(device_id==6):
+        path6 = './' + str(file_path)
+    elif(device_id==7):
+        path7 = './' + str(file_path)
+    elif(device_id==8):
+        path8 = './' + str(file_path)
+    elif(device_id==9):
+        path9 = './' + str(file_path)
+    elif(device_id==10):
+        path10 = './' + str(file_path)
+    elif(device_id==11):
+        path11 = './' + str(file_path)
+    elif(device_id==12):
+        path12 = './' + str(file_path)
+    elif(device_id==13):
+        path13 = './' + str(file_path)
+    elif(device_id==14):
+        path14 = './' + str(file_path)
+    elif(device_id==15):
+        path15 = './' + str(file_path)
+    elif(device_id==16):
+        path16 = './' + str(file_path)
 
     videos_to_merge = [
         path1,
         path2,
-        # path3,
-        # path4,
-        # path5,
-        # path6,
-        # path7,
-        # path8,
-        # path9,
-        # path10,
-        # path11,
-        # path12,
-        # path13,
-        # path14,
-        # path15,
-        # path16,
+        path3,
+        path4,
+        path5,
+        path6,
+        path7,
+        path8,
+        path9,
+        path10,
+        path11,
+        path12,
+        path13,
+        path14,
+        path15,
+        path16,
     ]
-    titles = ['v1', 'v2']
-    # , 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9', 'v10', 'v11', 'v12', 'v13', 'v14', 'v15', 'v16']
+    titles = ['v1', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9', 'v10', 'v11', 'v12', 'v13', 'v14', 'v15', 'v16']
     Process (target = await merge_videos(
         videos_to_merge,
         'merged.mp4',
@@ -540,7 +538,7 @@ async def main():
     # Start pipeline
     pipeline.set_state(Gst.State.PLAYING)
 
-    for i in range(2, 4):
+    for i in range(1, 17):
         stream_url = os.getenv('RTSP_URL_{id}'.format(id=i))
         await gst_stream(device_id=i ,location=stream_url, device_type=device_types[i])
     
