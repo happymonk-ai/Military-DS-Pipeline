@@ -8,8 +8,8 @@ async def merge_videos(list_video):
     input_videos = ""
     input_setpts = "nullsrc=size={}x{} [base];".format(width, height)
     input_overlays = "[base][video0] overlay=shortest=1 [tmp0];"
-    grid_width = 4
-    grid_height = 4
+    grid_width = 3
+    grid_height = 2
     for index, path_video in enumerate(list_video):
             input_videos += " -i " + path_video
             input_setpts += "[{}:v] setpts=PTS-STARTPTS, scale={}x{} [video{}];".format(index, width//grid_width, height//grid_height, index)
