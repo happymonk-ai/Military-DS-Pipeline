@@ -49,8 +49,6 @@ import cv2
 from sklearn.preprocessing import OrdinalEncoder, OneHotEncoder, LabelEncoder
 from collections import Counter
 
-import video_grid
-
 #face_detection
 import lmdb
 # import face_lmdb
