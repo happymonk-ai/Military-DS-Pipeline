@@ -33,7 +33,7 @@ from military_track import run
 from military_track import lmdb_known
 from military_track import lmdb_unknown
 
-from video_grid import merge_videos
+from video_merge import merge_videos
 
 #PytorchVideo
 from functools import partial
@@ -212,7 +212,7 @@ async def Activity(source,device_id,source_1):
     
     encoded_vid = pytorchvideo.data.encoded_video.EncodedVideo.from_path(source)
     
-    time_stamp_range = range(1,9) # time stamps in video for which clip is sampled. 
+    time_stamp_range = range(1,4) # time stamps in video for which clip is sampled. 
     clip_duration = 2.0 # Duration of clip used for each inference step.
     gif_imgs = []
     
@@ -225,7 +225,6 @@ async def Activity(source,device_id,source_1):
             time_stamp + clip_duration/2.0  # end second
         )
         inp_imgs = inp_imgs['video']
-        
         # Generate people bbox predictions using Detectron2's off the self pre-trained predictor
         # We use the the middle image in each clip to generate the bounding boxes.
         inp_img = inp_imgs[:,inp_imgs.shape[1]//2,:,:]
@@ -401,14 +400,8 @@ async def batch_save(device_id, file_id):
         path15,
         path16,
     ]
-    titles = ['v1', 'v2','v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9', 'v10', 'v11', 'v12', 'v13', 'v14', 'v15', 'v16']
-    Process (target = await merge_videos(
-        videos_to_merge,
-        'merged.mp4',
-        grid_size=(4, 4),  # 2 row, 2 cols
-        titles=titles,
-        title_position=(0.1, 0.5),  # text poistion is (0.1 * w, 0.5 * h)
-        max_frames=100) ) # merge first 100 frames per video
+    
+    await merge_videos(list_video = videos_to_merge)
 
 
     gc.collect()
