@@ -54,6 +54,7 @@ import lmdb
 # import face_lmdb
 import json
 import face_recognition 
+CUDA_LAUNCH_BLOCKING=1
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]  # yolov5 strongsort root directory

@@ -3,6 +3,8 @@ import subprocess as sp
 import os
 import cv2
 
+CUDA_LAUNCH_BLOCKING=1
+
 async def merge_videos(list_video):
     width = 1920
     height = 1080
