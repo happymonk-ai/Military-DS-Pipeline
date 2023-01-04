@@ -1,6 +1,7 @@
 ###list_videos contains the path the the videos=[]
 import subprocess as sp
 import os
+import cv2
 
 async def merge_videos(list_video):
     width = 1920
@@ -22,3 +23,11 @@ async def merge_videos(list_video):
 
     output = os.popen(complete_command)
     os.rename("output.mp4","./merge_videos/output.mp4")
+    cap = cv2.VideoCapture("./merge_videos/output.mp4")
+    while(True):
+        ret, frame = cap.read()
+        cv2.imshow('frame', frame)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+    cap.release()
+    cv2.destroyAllWindows()
