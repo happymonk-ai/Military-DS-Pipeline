@@ -103,16 +103,16 @@ path3 = './Nats_output/3/Nats_video3-0.mp4'
 path4 = './Nats_output/4/Nats_video4-0.mp4'
 path5 = './Nats_output/5/Nats_video5-0.mp4'
 path6 = './Nats_output/6/Nats_video6-0.mp4'
-path7 = './Nats_output/7/Nats_video7-0.mp4'
-path8 = './Nats_output/8/Nats_video8-0.mp4'
-path9 = './Nats_output/9/Nats_video9-0.mp4'
-path10 = './Nats_output/10/Nats_video10-0.mp4'
-path11 = './Nats_output/11/Nats_video11-0.mp4'
-path12 = './Nats_output/12/Nats_video12-0.mp4'
-path13 = './Nats_output/13/Nats_video13-0.mp4'
-path14 = './Nats_output/14/Nats_video14-0.mp4'
-path15 = './Nats_output/15/Nats_video15-0.mp4'
-path16 = './Nats_output/16/Nats_video16-0.mp4'
+# path7 = './Nats_output/7/Nats_video7-0.mp4'
+# path8 = './Nats_output/8/Nats_video8-0.mp4'
+# path9 = './Nats_output/9/Nats_video9-0.mp4'
+# path10 = './Nats_output/10/Nats_video10-0.mp4'
+# path11 = './Nats_output/11/Nats_video11-0.mp4'
+# path12 = './Nats_output/12/Nats_video12-0.mp4'
+# path13 = './Nats_output/13/Nats_video13-0.mp4'
+# path14 = './Nats_output/14/Nats_video14-0.mp4'
+# path15 = './Nats_output/15/Nats_video15-0.mp4'
+# path16 = './Nats_output/16/Nats_video16-0.mp4'
 
 
 queue1 = Queue()
@@ -212,7 +212,7 @@ async def Activity(source,device_id,source_1):
     
     encoded_vid = pytorchvideo.data.encoded_video.EncodedVideo.from_path(source)
     
-    time_stamp_range = range(1,4) # time stamps in video for which clip is sampled. 
+    time_stamp_range = range(1,9) # time stamps in video for which clip is sampled. 
     clip_duration = 2.0 # Duration of clip used for each inference step.
     gif_imgs = []
     
@@ -361,26 +361,26 @@ async def batch_save(device_id, file_id):
         path5 = './' + str(file_path)
     elif(device_id==6):
         path6 = './' + str(file_path)
-    elif(device_id==7):
-        path7 = './' + str(file_path)
-    elif(device_id==8):
-        path8 = './' + str(file_path)
-    elif(device_id==9):
-        path9 = './' + str(file_path)
-    elif(device_id==10):
-        path10 = './' + str(file_path)
-    elif(device_id==11):
-        path11 = './' + str(file_path)
-    elif(device_id==12):
-        path12 = './' + str(file_path)
-    elif(device_id==13):
-        path13 = './' + str(file_path)
-    elif(device_id==14):
-        path14 = './' + str(file_path)
-    elif(device_id==15):
-        path15 = './' + str(file_path)
-    elif(device_id==16):
-        path16 = './' + str(file_path)
+    # elif(device_id==7):
+    #     path7 = './' + str(file_path)
+    # elif(device_id==8):
+    #     path8 = './' + str(file_path)
+    # elif(device_id==9):
+    #     path9 = './' + str(file_path)
+    # elif(device_id==10):
+    #     path10 = './' + str(file_path)
+    # elif(device_id==11):
+    #     path11 = './' + str(file_path)
+    # elif(device_id==12):
+    #     path12 = './' + str(file_path)
+    # elif(device_id==13):
+    #     path13 = './' + str(file_path)
+    # elif(device_id==14):
+    #     path14 = './' + str(file_path)
+    # elif(device_id==15):
+    #     path15 = './' + str(file_path)
+    # elif(device_id==16):
+    #     path16 = './' + str(file_path)
 
     videos_to_merge = [
         path1,
@@ -389,16 +389,16 @@ async def batch_save(device_id, file_id):
         path4,
         path5,
         path6,
-        path7,
-        path8,
-        path9,
-        path10,
-        path11,
-        path12,
-        path13,
-        path14,
-        path15,
-        path16,
+        # path7,
+        # path8,
+        # path9,
+        # path10,
+        # path11,
+        # path12,
+        # path13,
+        # path14,
+        # path15,
+        # path16,
     ]
     
     await merge_videos(list_video = videos_to_merge)
