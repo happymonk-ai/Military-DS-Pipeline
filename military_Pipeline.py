@@ -466,11 +466,11 @@ async def gst_stream(device_id, location, device_type):
         # print(video_name_hls)
     
         if(device_type == "h.264"):
-            pipeline = Gst.parse_launch('rtspsrc location={location} protocols="tcp" name={device_id} caps="application/x-rtp,viderate=30/1" ! rtph264depay name=depay-{device_id} ! h264parse name=parse-{device_id} ! splitmuxsink location={path}-%01d.mp4 max-files=5 max-size-time=10000000000 name=sink-{device_id}'.format(location=location, path=video_name, device_id = device_id))
+            pipeline = Gst.parse_launch('rtspsrc location={location} protocols="tcp" name={device_id} caps="application/x-rtp,viderate=30/1" ! rtph264depay name=depay-{device_id} ! h264parse name=parse-{device_id} ! splitmuxsink location={path}-%01d.mp4 max-files=5 max-size-time=5000000000 name=sink-{device_id}'.format(location=location, path=video_name, device_id = device_id))
         elif(device_type == "h.265"):
-            pipeline = Gst.parse_launch('rtspsrc location={location} protocols="tcp" name={device_id} caps="application/x-rtp,viderate=30/1" ! rtph265depay name=depay-{device_id} ! tee name=t t. ! queue ! h265parse name=parse-{device_id} ! splitmuxsink location={path}-%01d.mp4 max-files=5 max-size-time=10000000000 name=sink-{device_id}'.format(location=location, path=video_name, device_id = device_id))
+            pipeline = Gst.parse_launch('rtspsrc location={location} protocols="tcp" name={device_id} caps="application/x-rtp,viderate=30/1" ! rtph265depay name=depay-{device_id} ! tee name=t t. ! queue ! h265parse name=parse-{device_id} ! splitmuxsink location={path}-%01d.mp4 max-files=5 max-size-time=5000000000 name=sink-{device_id}'.format(location=location, path=video_name, device_id = device_id))
         elif(device_type == "mp4"):
-            pipeline = Gst.parse_launch('rtspsrc location={location} protocols="tcp" name={device_id} caps="application/x-rtp,viderate=30/1" ! rtph264depay name=depay-{device_id} ! tee name=t t. ! queue ! h264parse name=parse-{device_id} ! splitmuxsink location={path}-%01d.mp4 max-files=5 max-size-time=10000000000 name=sink-{device_id}'.format(location=location, path=video_name, device_id = device_id))
+            pipeline = Gst.parse_launch('rtspsrc location={location} protocols="tcp" name={device_id} caps="application/x-rtp,viderate=30/1" ! rtph264depay name=depay-{device_id} ! tee name=t t. ! queue ! h264parse name=parse-{device_id} ! splitmuxsink location={path}-%01d.mp4 max-files=5 max-size-time=5000000000 name=sink-{device_id}'.format(location=location, path=video_name, device_id = device_id))
 
         sink = pipeline.get_by_name('sink-{device_id}'.format(device_id=device_id))
 
