@@ -55,6 +55,8 @@ from pytorchvideo.models.hub import slow_r50_detection # Another option is slowf
 
 from visualization import VideoVisualizer 
 
+CUDA_LAUNCH_BLOCKING=1
+
 # face_detection
 # import lmdb
 
