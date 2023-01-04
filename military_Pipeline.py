@@ -458,17 +458,17 @@ async def gst_stream(device_id, location, device_type):
         video_name = video_name1 + '/Nats_video'+str(device_id)
         print(video_name)
 
-        # filename for hls
-        video_name_hls1 = hls_path + '/' + str(device_id)
-        if not os.path.exists(video_name_hls1):
-            os.makedirs(video_name_hls1, exist_ok=True)
-        video_name_hls = video_name_hls1 + '/Hls_video'+str(device_id)
-        print(video_name_hls)
+        # # filename for hls
+        # video_name_hls1 = hls_path + '/' + str(device_id)
+        # if not os.path.exists(video_name_hls1):
+        #     os.makedirs(video_name_hls1, exist_ok=True)
+        # video_name_hls = video_name_hls1 + '/Hls_video'+str(device_id)
+        # print(video_name_hls)
     
         if(device_type == "h.264"):
-            pipeline = Gst.parse_launch('rtspsrc location={location} protocols="tcp" name={device_id} caps="application/x-rtp,viderate=30/1" ! rtph264depay name=depay-{device_id} ! tee name=t t. ! queue ! h264parse name=parse-{device_id} ! splitmuxsink location={path}-%01d.mp4 max-files=5 max-size-time=10000000000 name=sink-{device_id} t. ! queue ! h264parse config_interval=-1 ! decodebin ! videoconvert ! videoscale ! video/x-raw,width=1080, height=1080 ! x264enc ! mpegtsmux ! hlssink playlist-root=https://hls.ckdr.co.in/live/stream{device_id} playlist-location={hls_path}/{device_id}.m3u8 location={video_path}-%02d.ts target-duration=10 playlist-length=3 max-files=6'.format(location=location, path=video_name, device_id = device_id, hls_path = video_name_hls1, video_path = video_name_hls))
+            pipeline = Gst.parse_launch('rtspsrc location={location} protocols="tcp" name={device_id} caps="application/x-rtp,viderate=30/1" ! rtph264depay name=depay-{device_id} ! h264parse name=parse-{device_id} ! splitmuxsink location={path}-%01d.mp4 max-files=5 max-size-time=10000000000 name=sink-{device_id}'.format(location=location, path=video_name, device_id = device_id))
         elif(device_type == "h.265"):
-            pipeline = Gst.parse_launch('rtspsrc location={location} protocols="tcp" name={device_id} caps="application/x-rtp,viderate=30/1" ! rtph265depay name=depay-{device_id} ! tee name=t t. ! queue ! h265parse name=parse-{device_id} ! splitmuxsink location={path}-%01d.mp4 max-files=5 max-size-time=10000000000 name=sink-{device_id} t. ! queue ! h265parse config_interval=-1 ! decodebin ! videoconvert ! videoscale ! video/x-raw,width=1080, height=1080 ! x265enc ! mpegtsmux ! hlssink playlist-root=https://hls.ckdr.co.in/live/stream{device_id} playlist-location={hls_path}/{device_id}.m3u8 location={video_path}-%02d.ts target-duration=10 playlist-length=3 max-files=6'.format(location=location, path=video_name, device_id = device_id, hls_path = video_name_hls1, video_path = video_name_hls))
+            pipeline = Gst.parse_launch('rtspsrc location={location} protocols="tcp" name={device_id} caps="application/x-rtp,viderate=30/1" ! rtph265depay name=depay-{device_id} ! tee name=t t. ! queue ! h265parse name=parse-{device_id} ! splitmuxsink location={path}-%01d.mp4 max-files=5 max-size-time=10000000000 name=sink-{device_id}'.format(location=location, path=video_name, device_id = device_id))
         elif(device_type == "mp4"):
             pipeline = Gst.parse_launch('rtspsrc location={location} protocols="tcp" name={device_id} caps="application/x-rtp,viderate=30/1" ! rtph264depay name=depay-{device_id} ! tee name=t t. ! queue ! h264parse name=parse-{device_id} ! splitmuxsink location={path}-%01d.mp4 max-files=5 max-size-time=10000000000 name=sink-{device_id}'.format(location=location, path=video_name, device_id = device_id))
 
