@@ -99,10 +99,10 @@ avg_Batchcount_elephant = 0
 null = None
 path1 = './Nats_output/1/Nats_video1-0.mp4'
 path2 = './Nats_output/2/Nats_video2-0.mp4'
-path3 = './Nats_output/3/Nats_video3-0.mp4'
-path4 = './Nats_output/4/Nats_video4-0.mp4'
-path5 = './Nats_output/5/Nats_video5-0.mp4'
-path6 = './Nats_output/6/Nats_video6-0.mp4'
+# path3 = './Nats_output/3/Nats_video3-0.mp4'
+# path4 = './Nats_output/4/Nats_video4-0.mp4'
+# path5 = './Nats_output/5/Nats_video5-0.mp4'
+# path6 = './Nats_output/6/Nats_video6-0.mp4'
 # path7 = './Nats_output/7/Nats_video7-0.mp4'
 # path8 = './Nats_output/8/Nats_video8-0.mp4'
 # path9 = './Nats_output/9/Nats_video9-0.mp4'
@@ -353,14 +353,14 @@ async def batch_save(device_id, file_id):
         path1 = './' + str(file_path)
     elif(device_id==2):
         path2 = './' + str(file_path)
-    elif(device_id==3):
-        path3 = './' + str(file_path)
-    elif(device_id==4):
-        path4 = './' + str(file_path)
-    elif(device_id==5):
-        path5 = './' + str(file_path)
-    elif(device_id==6):
-        path6 = './' + str(file_path)
+    # elif(device_id==3):
+    #     path3 = './' + str(file_path)
+    # elif(device_id==4):
+    #     path4 = './' + str(file_path)
+    # elif(device_id==5):
+    #     path5 = './' + str(file_path)
+    # elif(device_id==6):
+    #     path6 = './' + str(file_path)
     # elif(device_id==7):
     #     path7 = './' + str(file_path)
     # elif(device_id==8):
@@ -384,11 +384,11 @@ async def batch_save(device_id, file_id):
 
     videos_to_merge = [
         path1,
-        path2,
-        path3,
-        path4,
-        path5,
-        path6,
+        path2
+        # path3,
+        # path4,
+        # path5,
+        # path6,
         # path7,
         # path8,
         # path9,
@@ -531,7 +531,7 @@ async def main():
     # Start pipeline
     pipeline.set_state(Gst.State.PLAYING)
 
-    for i in range(1, 7):
+    for i in range(1, 3):
         stream_url = os.getenv('RTSP_URL_{id}'.format(id=i))
         await gst_stream(device_id=i ,location=stream_url, device_type=device_types[i])
     
