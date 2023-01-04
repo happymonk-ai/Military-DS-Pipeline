@@ -126,7 +126,7 @@ video_model = video_model.eval().to(device)
 Gst.init(sys.argv)
 image_arr = None
 
-device_types = ['', 'h.264', 'h.264', 'h.264', 'h.265', 'h.264', 'h.265', 'mp4', 'mp4', 'mp4', 'mp4', 'mp4', 'mp4', 'mp4']
+device_types = ['', 'h.264', 'h.264', 'h.264', 'h.265', 'h.264', 'h.265']
 load_dotenv()
 
 # activity
@@ -531,7 +531,7 @@ async def main():
     # Start pipeline
     pipeline.set_state(Gst.State.PLAYING)
 
-    for i in range(1, 17):
+    for i in range(1, 7):
         stream_url = os.getenv('RTSP_URL_{id}'.format(id=i))
         await gst_stream(device_id=i ,location=stream_url, device_type=device_types[i])
     
