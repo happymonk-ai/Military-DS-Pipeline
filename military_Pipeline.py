@@ -415,7 +415,7 @@ async def batch_save(device_id, file_id):
         # path16,
     ]
     
-    await merge_videos(list_video = videos_to_merge)
+    #await merge_videos(list_video = videos_to_merge)
 
 
     gc.collect()
