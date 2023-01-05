@@ -120,10 +120,19 @@ path2 = './Nats_output/2/Nats_video2-0.mp4'
 
 
 queue1 = Queue()
-
-device = 'cuda' # or 'cpu'
-video_model = slow_r50_detection(True) # Another option is slowfast_r50_detection
-video_model = video_model.eval().to(device)
+try :
+    device = 'cuda' # or 'cpu'
+    video_model = slow_r50_detection(True) # Another option is slowfast_r50_detection
+    video_model = video_model.eval().to(device)
+except RuntimeError:
+    print("Initial GPU Usage")
+    gpu_usage()                             
+    torch.cuda.empty_cache()
+    cuda.select_device(0)
+    cuda.close()
+    cuda.select_device(0)
+    print("GPU Usage after emptying the cache")
+    gpu_usage()
 
 # gstreamer
 # Initializes Gstreamer, it's variables, paths
