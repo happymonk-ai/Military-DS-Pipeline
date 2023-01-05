@@ -118,12 +118,26 @@ path2 = './Nats_output/2/Nats_video2-0.mp4'
 # path15 = './Nats_output/15/Nats_video15-0.mp4'
 # path16 = './Nats_output/16/Nats_video16-0.mp4'
 
+# gstreamer
+# Initializes Gstreamer, it's variables, paths
+Gst.init(sys.argv)
+image_arr = None
+
+device_types = ['', 'h.264', 'h.264', 'h.264', 'h.265', 'h.264', 'h.265']
+load_dotenv()
 
 queue1 = Queue()
+
 try :
+    # activity
     device = 'cuda' # or 'cpu'
     video_model = slow_r50_detection(True) # Another option is slowfast_r50_detection
     video_model = video_model.eval().to(device)
+    cfg = get_cfg()
+    cfg.merge_from_file(model_zoo.get_config_file("COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml"))
+    cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.55  # set threshold for this model
+    cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml")
+    predictor = DefaultPredictor(cfg)
 except RuntimeError:
     print("Initial GPU Usage")
     gpu_usage()                             
@@ -134,20 +148,6 @@ except RuntimeError:
     print("GPU Usage after emptying the cache")
     gpu_usage()
 
-# gstreamer
-# Initializes Gstreamer, it's variables, paths
-Gst.init(sys.argv)
-image_arr = None
-
-device_types = ['', 'h.264', 'h.264', 'h.264', 'h.265', 'h.264', 'h.265']
-load_dotenv()
-
-# activity
-cfg = get_cfg()
-cfg.merge_from_file(model_zoo.get_config_file("COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml"))
-cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.55  # set threshold for this model
-cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml")
-predictor = DefaultPredictor(cfg)
 count_video = 0 
 
 
