@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 import gi
 gi.require_version('Gst', '1.0')
 from gi.repository import Gst, GObject, GLib
+from GPUtil import showUtilization as gpu_usage
+from numba import cuda
 
 #multi treading 
 import asyncio
@@ -138,6 +140,19 @@ cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.55  # set threshold for this model
 cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml")
 predictor = DefaultPredictor(cfg)
 count_video = 0 
+
+async def free_gpu_cache():
+    print("Initial GPU Usage")
+    gpu_usage()                             
+
+    torch.cuda.empty_cache()
+
+    cuda.select_device(0)
+    cuda.close()
+    cuda.select_device(0)
+
+    print("GPU Usage after emptying the cache")
+    gpu_usage()
 
 async def get_person_bboxes(inp_img, predictor):
     predictions = predictor(inp_img.cpu().detach().numpy())['instances'].to('cpu')
@@ -448,8 +463,11 @@ async def gst_stream(device_id, location, device_type):
             file_id = 4
             asyncio.run(gst_data((file_id), data))
         else:
-            asyncio.run(gst_data((file_id-1), data))
-        #     iterator += 1
+            try :
+                asyncio.run(gst_data((file_id-1), data))
+            except RuntimeErro as e :
+                free_gpu_cache()
+
 
     try:
         # filename for mp4
@@ -459,13 +477,6 @@ async def gst_stream(device_id, location, device_type):
             os.makedirs(video_name1, exist_ok=True)
         video_name = video_name1 + '/Nats_video'+str(device_id)
         print(video_name)
-
-        # # filename for hls
-        # video_name_hls1 = hls_path + '/' + str(device_id)
-        # if not os.path.exists(video_name_hls1):
-        #     os.makedirs(video_name_hls1, exist_ok=True)
-        # video_name_hls = video_name_hls1 + '/Hls_video'+str(device_id)
-        # print(video_name_hls)
     
         if(device_type == "h.264"):
             pipeline = Gst.parse_launch('rtspsrc location={location} protocols="tcp" name={device_id} caps="application/x-rtp,viderate=30/1" ! rtph264depay name=depay-{device_id} ! h264parse name=parse-{device_id} ! splitmuxsink location={path}-%01d.mp4 max-files=5 max-size-time=5000000000 name=sink-{device_id}'.format(location=location, path=video_name, device_id = device_id))
