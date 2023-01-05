@@ -22,6 +22,8 @@ import glob
 from nanoid import generate
 from io import BytesIO
 import gc
+from GPUtil import showUtilization as gpu_usage
+from numba import cuda
 
 import numpy as np
 import cv2 as cv
@@ -82,12 +84,23 @@ from trackers.multi_tracker_zoo import create_tracker
 logging.getLogger().removeHandler(logging.getLogger().handlers[0])
 
  # Load model
-device_track=''
-devices = select_device(device_track)
-model = DetectMultiBackend(WEIGHTS / 'three_class_05_dec.pt', device=devices, dnn=False, data=None, fp16=False)
-stride, names, pt = model.stride, model.names, model.pt
-imgsz = check_img_size((640, 640), s=stride)  # check image size
-device_id = ''
+try :
+    device_track=''
+    devices = select_device(device_track)
+    model = DetectMultiBackend(WEIGHTS / 'three_class_05_dec.pt', device=devices, dnn=False, data=None, fp16=False)
+    stride, names, pt = model.stride, model.names, model.pt
+    imgsz = check_img_size((640, 640), s=stride)  # check image size
+    device_id = ''
+except RuntimeError :
+    print("Initial GPU Usage")
+    gpu_usage()                             
+    torch.cuda.empty_cache()
+    cuda.select_device(0)
+    cuda.close()
+    cuda.select_device(0)
+    print("GPU Usage after emptying the cache")
+    gpu_usage()
+
 
 TOLERANCE = 0.62
 FRAME_THICKNESS = 3

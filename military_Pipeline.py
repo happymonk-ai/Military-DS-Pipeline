@@ -141,18 +141,6 @@ cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-Detection/faster_rcnn_R_5
 predictor = DefaultPredictor(cfg)
 count_video = 0 
 
-async def free_gpu_cache():
-    print("Initial GPU Usage")
-    gpu_usage()                             
-
-    torch.cuda.empty_cache()
-
-    cuda.select_device(0)
-    cuda.close()
-    cuda.select_device(0)
-
-    print("GPU Usage after emptying the cache")
-    gpu_usage()
 
 async def get_person_bboxes(inp_img, predictor):
     predictions = predictor(inp_img.cpu().detach().numpy())['instances'].to('cpu')
@@ -466,7 +454,17 @@ async def gst_stream(device_id, location, device_type):
             try :
                 asyncio.run(gst_data((file_id-1), data))
             except RuntimeErro as e :
-                free_gpu_cache()
+                 print("Initial GPU Usage")
+                 gpu_usage()                             
+
+                 torch.cuda.empty_cache()
+
+                 cuda.select_device(0)
+                 cuda.close()
+                 cuda.select_device(0)
+
+                 print("GPU Usage after emptying the cache")
+                 gpu_usage()
 
 
     try:
