@@ -365,8 +365,8 @@ async def batch_save(device_id, file_id):
 
     if(device_id==1):
         path1 = './' + str(file_path)
-    elif(device_id==2):
-        path2 = './' + str(file_path)
+    # elif(device_id==2):
+    #     path2 = './' + str(file_path)
     # elif(device_id==3):
     #     path3 = './' + str(file_path)
     # elif(device_id==4):
@@ -398,7 +398,7 @@ async def batch_save(device_id, file_id):
 
     videos_to_merge = [
         path1,
-        path2
+        # path2
         # path3,
         # path4,
         # path5,
@@ -551,7 +551,7 @@ async def main():
     # Start pipeline
     pipeline.set_state(Gst.State.PLAYING)
 
-    for i in range(1, 3):
+    for i in range(1, 2):
         stream_url = os.getenv('RTSP_URL_{id}'.format(id=i))
         await gst_stream(device_id=i ,location=stream_url, device_type=device_types[i])
     
