@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: my-gpu-app
+spec:
+   replicas: 1
+   selector:
+      matchLabels:
+         app: my-gpu-app
+   template:
+      metadata:
+         labels:
+            app: my-gpu-app
+      spec:
+         containers:
+            - name: my-gpu-container
+              image: dishimwe17/military-ds-pipeline:arm64
+              imagePullPolicy: Always
+              command: ['/bin/bash']
+              args: ['-c', 'my-gpu-app']
+              env:
+                 - name: NVIDIA_VISIBLE_DEVICES
+                   value: all
+                 - name: NVIDIA_DRIVER_CAPABILITIES
+                   value: compute,utility
+              volumeMounts:
+                 - name: nvidia-driver
+                   mountPath: /usr/local/nvidia
+                   readOnly: true
+         volumes:
+            - name: nvidia-driver
+              hostPath:
+                 path: /usr/local/nvidia
