@@ -61,6 +61,7 @@ RUN apt install libjpeg-dev zlib1g-dev -y
 RUN apt-get update && apt install build-essential libdbus-glib-1-dev -y
 RUN apt-get update && apt install redis libicu-dev python3-distutils-extra libudev-dev libsystemd-dev libxml2-dev libcups2-dev libxmlsec1-dev libavformat-dev libavdevice-dev -y
 COPY . .
+RUN python3.8 -m pip install --ignore-installed PyGObject
 RUN apt-get update && \
     apt-get install -y locales && \
     sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
